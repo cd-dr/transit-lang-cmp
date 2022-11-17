@@ -1,0 +1,15 @@
+(ql:quickload :str)
+
+(defstruct trip trip-id service-id route-id)
+
+(defstruct stop-time trip-id stop-id arrival departure)
+
+(defun process-stop-times (path)
+  (with-open-file (in path)
+    (do ((line (read-line in nil) (read-line in nil)))
+        ((null line))
+      (let ((parts (str:split "," line)))
+	(print (second parts))))))
+
+(let ((input-path "../MBTA_GTFS/stop_times.txt"))
+  (process-stop-times input-path))
